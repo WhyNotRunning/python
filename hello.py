@@ -1020,7 +1020,7 @@ def greeting(name):
 #比如Pillow的名称叫Pillow，因此，安装Pillow的命令就是：
 #pip install Pillow                #
 from PIL import Image
-im = Image.open('test.png')
+im = Image.open('test.jpg')
 print(im.format, im.size, im.mode)
 #PNG (400, 300) RGB
 im.thumbnail((200, 100))
