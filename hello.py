@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 import math
 mList = ['Tom','Joy','Mal']
 mTuple = (1,2,'Tom')
@@ -6,6 +9,545 @@ mSet = set([1,2,3])
 mStr = 'ABCD'
 mInt = int(123)
 mGenerator = (x * x for x in range(1,10))
+r'''
+print('hello world')
+
+1000+1000+2333
+print(22+33)
+print('100 + 200 =', 100 + 200)
+'''
+r'''
+用户输入字符串 其中name是变量名可以直接输入name打印变量信息or print(name)
+
+name = input() 
+name
+print(name)
+
+name = input('赶快输入的你姓名:')
+print('你好啊，',name)
+'''
+
+r'''
+print('1024 * 768 = xxx')
+print('1024 * 768 = ',1024*768)
+'''
+
+#以#开头的语句是注释，注释是给人看的，可以是任意内容，解释器会忽略掉注释。
+#其他每一行都是一个语句，当语句以冒号:结尾时，缩进的语句视为代码块。
+r'''
+#print("please input some world:")
+a = 100
+if a>0:
+    print(a)
+else:
+    print(-a)
+'''
+
+r'''
+#打印出I'm "OK" 的写法.转义字符\可以转义很多字符，比如\n表示换行，\t表示制表符，字符\本身也要转义，所以\\表示的字符就是\
+print('I\'m "OK"\nI\'m "OK" too')
+#如果字符串里面有很多字符都需要转义，就需要加很多\，为了简化，Python还允许用r''表示''内部的字符串默认不转义，可以自己试试
+print('\\\t\\')
+print(r'\\\t\\')
+'''
+#如果字符串内部有很多换行，用\n写在一行里不好阅读，为了简化，Python允许用'''内容内容'''的格式表示多行内容
+
+#print('''line1
+#line2
+#line3''')
+#好像r'''...'''与'''...'''无法前途使用
+
+#布尔值写法大小写敏感
+r'''
+True
+5>3 #True
+True or False #True
+not True      #False
+#python中的空值Null,0是有意义的
+'''
+
+#变量在程序中就是用一个变量名表示了，变量名必须是大小写英文、数字和_的组合，且不能用数字开头
+r'''
+a=1
+t_007='t_007'
+true='hahaha'
+answer=True
+print(answer)
+answer=true
+print(answer)
+#这种变量本身类型不固定的语言称之为动态语言，与之对应的是静态语言。
+#静态语言在定义变量时必须指定变量类型，如果赋值的时候类型不匹配，就会报错。例如Java是静态语言，赋值语句如下（// 表示注释）：
+int a = 123; // a是整数类型变量
+a = "ABC"; // 错误：不能把字符串赋给整型变量
+'''
+
+#常量:但事实上Python根本没有任何机制保证PI不会被改变，
+#所以，用全部大写的变量名表示常量只是一个习惯上的用法，如果你一定要改变变量PI的值，也没人能拦住你。
+r'''
+PI= 3.14159265359
+print(PI)
+#除法
+print(10/3)              #答案：3.33333333333
+#底板除，只保留整数位
+print(10//3)               #答案：3
+#余数
+print(10%3)               #答案：1
+'''
+#编码：对于单个字符的编码，Python提供了ord()函数获取字符的整数表示，chr()函数把编码转换为对应的字符
+r'''
+print(ord('A'),
+ord('中'),
+chr(66),
+chr(25991),'\u4e2d\u6587')
+#如果知道字符的整数编码，还可以用十六进制这么写str
+print('\u4e2d\u6587') #中文
+#由于Python的字符串类型是str，在内存中以Unicode表示，一个字符对应若干个字节。如果要在网络上传输，或者保存到磁盘上，就需要把str变为以字节为单位的bytes。
+
+#Python对bytes类型的数据用带b前缀的单引号或双引号表示
+x= b'ABC'
+#要注意区分'ABC'和b'ABC'，前者是str，后者虽然内容显示得和前者一样，但bytes的每个字符都只占用一个字节
+#以Unicode表示的str通过encode()方法可以编码为指定的bytes
+abc = 'ABC'.encode('ascii') #b'ABC
+print(abc)
+'中文'.encode('utf-8')
+#'中文'.encode('ascii') #含有中文的str无法用ASCII编码，因为中文编码的范围超过了ASCII编码的范围，Python会报错。
+#纯英文的str可以用ASCII编码为bytes，内容是一样的，含有中文的str可以用UTF-8编码为bytes。
+#在bytes中，无法显示为ASCII字符的字节，用\x##显示。
+
+#反过来，如果我们从网络或磁盘上读取了字节流，那么读到的数据就是bytes。要把bytes变为str，就需要用decode()方法
+test = b'ABC'.decode('ascii') #ABC
+print(test)
+
+#字符长度函数len()
+print(len('中文'.encode('utf-8')))
+
+#格式化：最后一个常见的问题是如何输出格式化的字符串。在Python中，采用的格式化方式和C语言是一致的，用%实现
+print('hello , %s' %'world') #如果只有一个%?，括号可以省略。
+print('Hi, %s, you have $%d.' %('zhangshan',10000))
+#%d 整数
+#%f 浮点数
+#%s 字符串
+#%x 十六进制整数
+#有些时候，字符串里面的%是一个普通字符怎么办？这个时候就需要转义，用%%来表示一个%
+print('growth rate : %d%%' %7)
+print('growth rate : 7%')
+#格式化整数和浮点数还可以指定是否补0和整数与小数的位数
+print('%2d - %02d' %(3,1))
+print('%.2f' %3.1415926)
+
+add = 85 - 72
+rate = add/72*100
+print('%.1f%%' %rate)
+'''
+
+#list和tuple
+r'''
+#要取最后一个元素，除了计算索引位置外，还可以用-1做索引，直接获取最后一个元素
+classMates = ['Tom','Patter','Joy']
+print(classMates)
+print(len(classMates),classMates[0],classMates[2],classMates[-1]
+    )
+#list是一个可变的有序表，所以，可以往list中追加元素到末尾
+classMates.append('Test')
+print(classMates)
+print(len(classMates),classMates[0],classMates[2],classMates[-1]
+    )
+#也可以把元素插入到指定的位置，比如索引号为1的位置
+classMates.insert(1,'index1')
+print(classMates)
+#要删除list末尾的元素，用pop()方法
+classMates.pop()
+print(classMates)
+#要删除指定位置的元素，用pop(i)方法，其中i是索引位置
+classMates.pop(1)
+print(classMates)
+#要把某个元素替换成别的元素，可以直接赋值给对应的索引位置
+classMates[0] = 'tom'
+#list里面的元素的数据类型也可以不同
+classMates = ['sss',111,True]
+print(classMates)
+#list元素也可以是其他list
+classMates = ['sss',['ite','ites']]
+print(len(classMates),classMates)
+
+#tuple另一种有序列表叫元组：tuple。tuple和list非常类似，但是tuple一旦初始化就不能修改.
+classMates = ('Tom','Patter','Joy')
+#现在，classmates这个tuple不能变了，它也没有append()，insert()这样的方法。其他获取元素的方法和list是一样的，
+#你可以正常地使用classmates[0]，classmates[-1]，但不能赋值成另外的元素。
+#不可变的tuple有什么意义？因为tuple不可变，所以代码更安全。如果可能，能用tuple代替list就尽量用tuple。
+
+#如果要定义一个空的tuple，可以写成()：
+t = ()
+print(t)
+#定义一个元素
+t = (1)
+print(t)
+#定义的不是tuple，是1这个数！这是因为括号()既可以表示tuple，又可以表示数学公式中的小括号，这就产生了歧义，
+#因此，Python规定，这种情况下，按小括号进行计算，计算结果自然是1。
+#所以，只有1个元素的tuple定义时必须加一个逗号,，来消除歧义
+t = (1,)
+print(t)
+##可变的tuple
+t = ('a', 'b',['A', 'B'])
+t[2][0] = 'X'
+t[2][1] = 'Y'
+print(t)
+#表面上看，tuple的元素确实变了，但其实变的不是tuple的元素，而是list的元素。
+#tuple一开始指向的list并没有改成别的list，所以，tuple所谓的“不变”是说，tuple的每个元素，指向永远不变。
+#即指向'a'，就不能改成指向'b'，指向一个list，就不能改成指向其他对象，但指向的这个list本身是可变的！
+'''
+
+#条件判断
+r'''
+temp = input('输入你的年龄吧:\n')
+age = int(temp)
+if age<16:
+    print('你是小学生吗？')
+    print('你真的不是小学生吗？')
+elif age<30:
+    print('小伙子要努力工作啦!')
+    print('我会的啦')
+else:
+    print('生活什么的才是最重要的啦')
+'''
+
+#循环
+r'''
+names = ['Tom','Joy','Mal']
+for x in names:
+    print(x)
+print('-------------------------------')
+for x in names:
+    if x == 'Tom':
+        print(x)
+#如果要计算1-100的整数之和，从1写到100有点困难，幸好Python提供一个range()函数，可以生成一个整数序列，
+#再通过list()函数可以转换为list。比如range(5)生成的序列是从0开始小于5的整数
+temp = list(range(5))
+print(temp)
+#range(101)就可以生成0-100的整数序列，计算如下
+sum = 0
+for x in range(101):
+    sum = sum + x
+print(sum)
+#第二种循环是while循环，只要条件满足，就不断循环，条件不满足时退出循环。
+sum = 0
+n = 1
+while n<99:
+    sum = sum + n
+    n = n +2
+print(sum)
+'''
+
+#字典dict和set
+#Python内置了字典：dict的支持，dict全称dictionary，在其他语言中也称为map，使用键-值（key-value）存储，具有极快的查找速度。
+#举个例子，假设要根据同学的名字查找对应的成绩，如果用list实现，需要两个list：
+r'''
+names = ['Tom','Joy','Mal']
+soures = [99,88,77]
+#如果用dict实现，只需要一个“名字”-“成绩”的对照表，直接根据名字查找成绩，无论这个表有多大，查找速度都不会变慢。
+di = {'Tom':99,'Joy':88,'Mal':77}
+print(di['Tom'])
+di['Tom'] = 100
+print(di['Tom'])
+#要避免key不存在的错误，有两种办法，一是通过in判断key是否存在：
+print('Test' in di,'Tom' in di)
+#二是通过dict提供的get方法，如果key不存在，可以返回None，或者自己指定的value：
+print(di.get('Test'))
+print(di.get('Test',-1))
+#注意：返回None的时候Python的交互式命令行不显示结果。
+#要删除一个key，用pop(key)方法，对应的value也会从dict中删除：
+di.pop('Tom')
+print(di)
+'''
+#请务必注意，dict内部存放的顺序和key放入的顺序是没有关系的。
+#和list比较，dict有以下几个特点：
+#查找和插入的速度极快，不会随着key的增加而增加；
+#需要占用大量的内存，内存浪费多。
+#而list相反：
+#查找和插入的时间随着元素的增加而增加；
+#占用空间小，浪费内存很少。
+#所以，dict是用空间来换取时间的一种方法。
+#dict可以用在需要高速查找的很多地方，在Python代码中几乎无处不在，正确使用dict非常重要，需要牢记的第一条就是dict的key必须是不可变对象。
+#这是因为dict根据key来计算value的存储位置，如果每次计算相同的key得出的结果不同，那dict内部就完全混乱了。这个通过key计算位置的算法称为哈希算法（Hash）。
+#要保证hash的正确性，作为key的对象就不能变。在Python中，字符串、整数等都是不可变的，因此，可以放心地作为key。而list是可变的，就不能作为key：
+
+
+#set
+#set和dict类似，也是一组key的集合，但不存储value。由于key不能重复，所以，在set中，没有重复的key。
+r'''
+#要创建一个set，需要提供一个list作为输入集合
+s = set([1,2,3])
+print(s)
+s.add(4)
+print(s)
+s.add(1)
+print(s)
+s.remove(4)
+print(s)
+
+#再议不可变对象
+
+#上面我们讲了，str是不变对象，而list是可变对象。
+
+#对于可变对象，比如list，对list进行操作，list内部的内容是会变化的，比如：
+a = ['c','b','a']
+a.sort() #对元素进行排序
+print(a)
+
+#而对于不可变对象，比如str，对str进行操作呢：
+a = 'abc'
+b = a.replace('a','A')
+print(b,a)
+'''
+#要始终牢记的是，a是变量，而'abc'才是字符串对象！有些时候，我们经常说，对象a的内容是'abc'，
+#但其实是指，a本身是一个变量，它指向的对象的内容才是'abc'
+
+#函数S=π*r*r
+#当代码出现有规律的重复的时候，你就需要当心了，每次写3.14 * x * x不仅很麻烦，而且，如果要把3.14改成3.14159265359的时候，得全部替换。
+#有了函数，我们就不再每次写s = 3.14 * x * x，
+#而是写成更有意义的函数调用s = area_of_circle(x)，而函数area_of_circle本身只需要写一次，就可以多次调用。
+
+#抽象
+r'''
+计算数列的和，比如：1 + 2 + 3 + ... + 100，写起来十分不方便，于是数学家发明了求和符号∑，可以把1 + 2 + 3 + ... + 100记作：
+100
+∑n
+n=1
+'''
+
+
+#函数
+#也可以在交互式命令行通过help(abs)查看abs函数的帮助信息。
+r'''
+print(abs(100))
+print(abs(-100))
+'''
+#数据类型转换
+r'''
+print(int('123'),
+#int('12.35'), 不能直接转换
+int(float('12.35')),
+float('12.35'),
+str(12.3),
+bool(1),
+bool(''))
+'''
+
+#定义函数
+r'''
+def my_abs(x):
+    if x>0:
+        return x
+    else:
+        return -x
+'''
+#请注意，函数体内部的语句在执行时，一旦执行到return时，函数就执行完毕，并将结果返回。
+#因此，函数内部通过条件判断和循环可以实现非常复杂的逻辑。
+#如果没有return语句，函数执行完毕后也会返回结果，只是结果为None。
+#return None可以简写为return。
+#Python交互环境中定义函数时，注意Python会出现...的提示。函数定义结束后需要按两次回车重新回到>>>提示符下
+#如果你已经把my_abs()的函数定义保存为abstest.py文件了，那么，可以在该文件的当前目录下启动Python解释器，
+#用from abstest import my_abs来导入my_abs()函数，注意abstest是文件名（不含.py扩展名）
+
+#空函数
+#如果想定义一个什么事也不做的空函数，可以用pass语句：
+r'''
+def nop():
+    pass
+'''
+#pass语句什么都不做，那有什么用？实际上pass可以用来作为占位符，
+#比如现在还没想好怎么写函数的代码，就可以先放一个pass，让代码能运行起来。
+
+#参数检查
+#调用函数时，如果参数个数不对，Python解释器会自动检查出来，并抛出TypeError：
+#但是如果参数类型不对，Python解释器就无法帮我们检查。
+
+#返回多个值
+#函数可以返回多个值吗？答案是肯定的。
+#比如在游戏中经常需要从一个点移动到另一个点，给出坐标、位移和角度，就可以计算出新的新的坐标：
+r'''
+import math
+def move(x, y, step, angle=0):
+    nx = x + step * math.cos(angle)
+    ny = y + step * math.sin(angle)
+    return nx, ny
+x, y = move(100, 100, 60, math.pi / 6)
+print(x, y)
+print(move(11,33,3,math.pi/6))
+'''
+#但其实这只是一种假象，Python函数返回的仍然是单一值
+#原来返回值是一个tuple！但是，在语法上，返回一个tuple可以省略括号，
+#而多个变量可以同时接收一个tuple，按位置赋给对应的值，所以，Python的函数返回多值其实就是返回一个tuple，但写起来更方便。
+
+#函数的参数
+#定义函数的时候，我们把参数的名字和位置确定下来，函数的接口定义就完成了。对于函数的调用者来说，只需要知道如何传递正确的参数，
+#以及函数将返回什么样的值就够了，函数内部的复杂逻辑被封装起来，调用者无需了解。
+#Python的函数定义非常简单，但灵活度却非常大。除了正常定义的必选参数外，还可以使用默认参数、可变参数和关键字参数，
+#使得函数定义出来的接口，不但能处理复杂的参数，还可以简化调用者的代码。
+
+#位置参数
+r'''
+def power(x):
+    return x * x
+
+def power(x, n):
+    s = 1
+    while n > 0:
+        n = n - 1
+        s = s * x
+    return s
+'''
+#修改后的power(x, n)函数有两个参数：x和n，这两个参数都是位置参数，调用函数时，传入的两个值按照位置顺序依次赋给参数x和n。
+#默认参数
+#新的power(x, n)函数定义没有问题，但是，旧的调用代码失败了，原因是我们增加了一个参数，导致旧的代码因为缺少一个参数而无法正常调用
+#这个时候，默认参数就排上用场了。由于我们经常计算x2，所以，完全可以把第二个参数n的默认值设定为2：
+r'''
+def power(x, n=2):
+    s = 1
+    while n > 0:
+        n = n - 1
+        s = s * x
+    return s
+'''
+#这样，当我们调用power(5)时，相当于调用power(5, 2)
+#
+#先定义一个函数，传入一个list，添加一个END再返回：
+r'''
+def add_end(L=[]):
+    L.append('END')
+    return L
+'''
+r'''
+#当你正常调用时，结果似乎不错：
+add_end([1, 2, 3]) #[1, 2, 3, 'END']
+#当你使用默认参数调用时，一开始结果也是对的：
+add_end() #['END']
+#但是，再次调用add_end()时，结果就不对了：  
+add_end() #['END', 'END']
+'''
+#所以，定义默认参数要牢记一点：默认参数必须指向不变对象！
+#要修改上面的例子，我们可以用None这个不变对象来实现：
+r'''
+def add_end(L=None):
+    if L is None:
+        L = []
+    L.append('END')
+    return L
+'''
+
+#可变参数
+#在Python函数中，还可以定义可变参数。顾名思义，可变参数就是传入的参数个数是可变的，可以是1个、2个到任意个，还可以是0个
+#要定义出这个函数，我们必须确定输入的参数。由于参数个数不确定，我们首先想到可以把a，b，c……作为一个list或tuple传进来，
+r'''
+def calc(numbers):
+    sum = 0
+    for x in numbers:
+        sum = sum + x*x
+    return sum
+calc([1,2,3])
+'''
+#但是调用的时候，需要先组装出一个list或tuple
+#所以，我们把函数的参数改为可变参数：
+r'''
+def calc(*numbers):
+    sum = 0
+    for n in numbers:
+        sum = sum + n * n
+    return sum
+calc(1,2,3)
+#如果已经有一个list或者tuple，要调用一个可变参数怎么办？
+nums = [1, 2, 3]
+calc(*nums)
+'''
+
+#关键字参数
+#可变参数允许你传入0个或任意个参数，这些可变参数在函数调用时自动组装为一个tuple。
+#而关键字参数允许你传入0个或任意个含参数名的参数，这些关键字参数在函数内部自动组装为一个dict。
+r'''
+def person(name, age, **kw):
+    print('name:', name, 'age:', age, 'other:', kw)
+'''
+#命名关键字参数
+#对于关键字参数，函数的调用者可以传入任意不受限制的关键字参数。至于到底传入了哪些，就需要在函数内部通过kw检查。
+#仍以person()函数为例，我们希望检查是否有city和job参数：
+r'''
+def person(name, age, **kw):
+    if 'city' in kw:
+        # 有city参数
+        pass
+    if 'job' in kw:
+        # 有job参数
+        pass
+    print('name:', name, 'age:', age, 'other:', kw)
+'''
+#但是调用者仍可以传入不受限制的关键字参数：
+r'''
+person('Jack', 24, city='Beijing', addr='Chaoyang', zipcode=123456)
+'''
+#如果要限制关键字参数的名字，就可以用命名关键字参数，例如，只接收city和job作为关键字参数。这种方式定义的函数如下
+r'''
+def person(name, age, *, city, job):
+    print(name, age, city, job)
+'''
+#和关键字参数**kw不同，命名关键字参数需要一个特殊分隔符*，*后面的参数被视为命名关键字参数。
+r'''
+person('Jack', 24, city='Beijing', job='Engineer')
+#Jack 24 Beijing Engineer
+'''
+
+#参数组合
+#在Python中定义函数，可以用必选参数、默认参数、可变参数、关键字参数和命名关键字参数，这5种参数都可以组合使用，
+#除了可变参数无法和命名关键字参数混合。但是请注意，参数定义的顺序必须是：必选参数、默认参数、可变参数/命名关键字参数和关键字参数。
+r'''
+def f1(a, b, c=0, *args, **kw):
+    print('a =', a, 'b =', b, 'c =', c, 'args =', args, 'kw =', kw)
+
+def f2(a, b, c=0, *, d, **kw):
+    print('a =', a, 'b =', b, 'c =', c, 'd =', d, 'kw =', kw)
+'''
+#最神奇的是通过一个tuple和dict，你也可以调用上述函数：
+r'''
+args = (1, 2, 3, 4)
+kw = {'d': 99, 'x': '#'}
+f1(*args, **kw)
+a = 1 b = 2 c = 3 args = (4,) kw = {'d': 99, 'x': '#'}
+'''
+#所以，对于任意函数，都可以通过类似func(*args, **kw)的形式调用它，无论它的参数是如何定义的
+
+
+#递归表达式
+r'''
+def fact(n):
+    if n == 1:
+        return 1
+    return n*n-1
+print(fact(99))
+'''
+#递归函数的优点是定义简单，逻辑清晰。理论上，所有的递归函数都可以写成循环的方式，但循环的逻辑不如递归清晰。
+#使用递归函数需要注意防止栈溢出。在计算机中，函数调用是通过栈（stack）这种数据结构实现的，
+#每当进入一个函数调用，栈就会加一层栈帧，每当函数返回，栈就会减一层栈帧。由于栈的大小不是无限的，
+#所以，递归调用的次数过多，会导致栈溢出。
+#解决递归调用栈溢出的方法是通过尾递归优化，事实上尾递归和循环的效果是一样的，所以，把循环看成是一种特殊的尾递归函数也是可以的。
+#尾递归是指，在函数返回的时候，调用自身本身，并且，return语句不能包含表达式。
+#这样，编译器或者解释器就可以把尾递归做优化，使递归本身无论调用多少次，都只占用一个栈帧，不会出现栈溢出的情况。
+
+#上面的fact(n)函数由于return n * fact(n - 1)引入了乘法表达式，所以就不是尾递归了。
+#要改成尾递归方式，需要多一点代码，主要是要把每一步的乘积传入到递归函数中：
+r'''
+def fact(n):
+    return fact_iter(n, 1)
+
+def fact_iter(num, product):
+    if num == 1:
+        return product
+    return fact_iter(num - 1, num * product)
+
+print(fact(5))
+'''
+#尾递归调用时，如果做了优化，栈不会增长，因此，无论多少次调用也不会导致栈溢出。
+#遗憾的是，大多数编程语言没有针对尾递归做优化，Python解释器也没有做优化，所以，即使把上面的fact(n)函数改成尾递归方式，也会导致栈溢出。
+
+
 #切片
 l = mList
 print(l)
