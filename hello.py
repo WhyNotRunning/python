@@ -9,6 +9,10 @@ mSet = set([1,2,3])
 mStr = 'ABCD'
 mInt = int(123)
 mGenerator = (x * x for x in range(1,10))
+# def p(*x):
+#     for s in x:
+#         print(s)
+p = print
 r'''
 print('hello world')
 
@@ -558,9 +562,9 @@ print(l[:1]) #默认为0时可以省略
 
 #迭代
 for x in mList:
-	print(x)
+    print(x)
 for x in mStr:
-	print(x)
+    print(x)
 from collections import Iterable
 print(isinstance('abc', Iterable)) # str是否可迭代
 #同时引用了两个变量，在Python里是很常见的
@@ -568,18 +572,18 @@ for x, y in [(1, 1), (2, 4), (3, 9)]:
     print(x, y)
 #Python内置的enumerate函数可以把一个list变成索引-元素对，这样就可以在for循环中同时迭代索引和元素本身
 for i,value in enumerate(mList):
-	print(i,value)
+    print(i,value)
 
 #列表生产式
 #列表生成式即List Comprehensions，是Python内置的非常简单却强大的可以用来创建list的生成式。
 l = []
 for x in range(1,10):
-	l.append(x)
+    l.append(x)
 print(l)
 #2
 l = []
 for x in range(1,10):
-	l.append(x*x)
+    l.append(x*x)
 print(l)
 #3
 l = [x*x for x in range(1,10)]
@@ -595,7 +599,7 @@ import os #导入os模块
 l = [d for d in os.listdir('.')] # os.listdir可以列出文件和目录
 #7for循环其实可以同时使用两个甚至多个变量，比如dict的items()可以同时迭代key和value：
 for k,v in mDict.items():
-	print(k,'=',v)
+    print(k,'=',v)
 
 #生成器
 #通过列表生成式，我们可以直接创建一个列表。但是，受到内存限制，列表容量肯定是有限的。而且，创建一个包含100万个元素的列表，
@@ -609,23 +613,23 @@ g = (x * x for x in range(1,10)) #generator
 #一个一个打印出来，可以通过next()函数获得generator的下一个返回值
 print(next(mGenerator)) 
 for x in mGenerator:
-	print(x)
+    print(x)
 #如果推算的算法比较复杂，用类似列表生成式的for循环无法实现的时候，还可以用函数来实现。
 def fib(max):
-	n, a, b = 0, 0, 1
-	while n<max:
-		print(b)
-		a, b = b, a + b
-		n = n + 1
-	return 'done'
+    n, a, b = 0, 0, 1
+    while n<max:
+        print(b)
+        a, b = b, a + b
+        n = n + 1
+    return 'done'
 #上面的函数和generator仅一步之遥。要把fib函数变成generator，只需要把print(b)改为yield b就可以了
 def fib(max):
-	n, a, b = 0, 0, 1
-	while n<max:
-		yield b
-		a, b = b, a + b
-		n = n + 1
-	return 'done'
+    n, a, b = 0, 0, 1
+    while n<max:
+        yield b
+        a, b = b, a + b
+        n = n + 1
+    return 'done'
 #这里，最难理解的就是generator和函数的执行流程不一样。函数是顺序执行，遇到return语句或者最后一行函数语句就返回。
 #而变成generator的函数，在每次调用next()的时候执行，遇到yield语句返回，再次执行时从上次返回的yield语句处继续执行。
 def odd():
@@ -641,12 +645,12 @@ print(next(o),next(o),next(o))
 #如果想要拿到返回值，必须捕获StopIteration错误，返回值包含在StopIteration的value中
 g = fib(6)
 while True:
-	try:
-		x = next(g)
-		print('g:', x)
-	except StopIteration as e:
-		print('Generator return value:', e.value)
-		break
+    try:
+        x = next(g)
+        print('g:', x)
+    except StopIteration as e:
+        print('Generator return value:', e.value)
+        break
 
 #迭代器
 #我们已经知道，可以直接作用于for循环的数据类型有以下几种：
@@ -718,7 +722,7 @@ print(add(-5, 6, abs))
 #我们先看map。map()函数接收两个参数，一个是函数，一个是Iterable，
 #map将传入的函数依次作用到序列的每个元素，并把结果作为新的Iterator返回。
 def f(x):
-	return x * x
+    return x * x
 r = map(f, [1,2,3])
 print(list(r))
 #map()传入的第一个参数是f，即函数对象本身。由于结果r是一个Iterator，Iterator是惰性序列，
@@ -730,7 +734,7 @@ print(list(r))
 #把序列[1, 3, 5, 7, 9]变换成整数13579
 from functools import reduce
 def fn(x, y):
-	return x*10 + y
+    return x*10 + y
 print(reduce(fn,[1, 3, 5, 7, 9]))
 
 def str2int(s):
@@ -752,7 +756,7 @@ def str2int(s):
 #和map()类似，filter()也接收一个函数和一个序列。和map()不同的时，filter()把传入的函数依次作用于每个元素，
 #然后根据返回值是True还是False决定保留还是丢弃该元素。
 def is_old(x):
-	return x % 2 == 1
+    return x % 2 == 1
 list(filter(is_old, [0,1,2,3,4]))
 #注意到filter()函数返回的是一个Iterator，也就是一个惰性序列，所以要强迫filter()完成计算结果，
 #需要用list()函数获得所有结果并返回list。
@@ -846,7 +850,7 @@ def build(x, y):
 #装饰器
 #由于函数也是一个对象，而且函数对象可以被赋值给变量，所以，通过变量也能调用该函数。
 def now():
-	print('2016-01-26')
+    print('2016-01-26')
 f = now
 f()
 #函数对象有一个__name__属性，可以拿到函数的名字：
@@ -856,15 +860,15 @@ print(now.__name__,f.__name__)
 
 #本质上，decorator就是一个返回函数的高阶函数。所以，我们要定义一个能打印日志的decorator，可以定义如下
 def log(func):
-	def wapper(*args, **kw):
-		print('call function %s()' %func.__name__)
-		return func(*args, **kw)
-	return wapper
+    def wapper(*args, **kw):
+        print('call function %s()' %func.__name__)
+        return func(*args, **kw)
+    return wapper
 #观察上面的log，因为它是一个decorator，所以接受一个函数作为参数，并返回一个函数。我们要借助Python的@语法，
 #把decorator置于函数的定义处：
 @log
 def now():
-	print('2016-01-26')
+    print('2016-01-26')
 now()
 #把@log放到now()函数的定义处，相当于执行了语句：
 now = log(now)
@@ -1031,6 +1035,1369 @@ im.save('thumb.jpg', 'JPEG')
 sys.path
 
 
+
+#面向对象编程
+'''
+面向对象编程——Object Oriented Programming，简称OOP，是一种程序设计思想。OOP把对象作为程序的基本单元，一个对象包含了数据和操作数据的函数。
+
+面向过程的程序设计把计算机程序视为一系列的命令集合，即一组函数的顺序执行。为了简化程序设计，面向过程把函数继续切分为子函数，即把大块函数通过切割成小块函数来降低系统的复杂度。
+
+而面向对象的程序设计把计算机程序视为一组对象的集合，而每个对象都可以接收其他对象发过来的消息，并处理这些消息，计算机程序的执行就是一系列消息在各个对象之间传递。
+
+在Python中，所有数据类型都可以视为对象，当然也可以自定义对象。自定义的对象数据类型就是面向对象中的类（Class）的概念。
+
+我们以一个例子来说明面向过程和面向对象在程序流程上的不同之处。
+'''
+#假设我们要处理学生的成绩表，为了表示一个学生的成绩，面向过程的程序可以用一个dict表示
+stu1 = {'name':'Tom','soure':99}
+stu2 = {'name':'Joy','soure':88}
+#而处理学生成绩可以通过函数实现，比如打印学生的成绩：
+def print_soure(stu):
+    print('%s : %s' % (stu['name'], stu['soure']))
+print_soure(stu1)
+
+#如果采用面向对象的程序设计思想，我们首选思考的不是程序的执行流程，而是Student这种数据类型应该被视为一个对象，
+#这个对象拥有name和score这两个属性（Property）。如果要打印一个学生的成绩，首先必须创建出这个学生对应的对象，
+#然后，给对象发一个print_score消息，让对象自己把自己的数据打印出来。
+class Student(object):
+    """docstring for Student"""
+    def __init__(self, name, soure):
+        #super(Student, self, name, soure).__init__()
+        self.name = name
+        self.soure = soure
+    def print_soure(self):
+        print('%s : %s' %(self.name, self.soure))
+Tom = Student('Tom', 98)
+Tom.print_soure()        
+
+#类和实例
+#面向对象最重要的概念就是类（Class）和实例（Instance），必须牢记类是抽象的模板，比如Student类，
+#而实例是根据类创建出来的一个个具体的“对象”，每个对象都拥有相同的方法，但各自的数据可能不同。
+class Student(object):
+    """docstring for Student"""
+    def __init__(self):
+        super(Student, self).__init__()
+
+st = Student()
+print(st)
+#class后面紧接着是类名，即Student，类名通常是大写开头的单词，紧接着是(object)，表示该类是从哪个类继承下来的，
+#继承的概念我们后面再讲，通常，如果没有合适的继承类，就使用object类，这是所有类最终都会继承的类。
+#由于类可以起到模板的作用，因此，可以在创建实例的时候，把一些我们认为必须绑定的属性强制填写进去。
+#通过定义一个特殊的__init__方法，在创建实例的时候，就把name，score等属性绑上去：
+class Student(object):
+    def __init__(self, name, score):
+        self.name = name
+        self.score = score
+st = Student('Tom',99)
+print(st.name,st.score)
+
+#数据封装
+#面向对象编程的一个重要特点就是数据封装。在上面的Student类中，
+#每个实例就拥有各自的name和score这些数据。我们可以通过函数来访问这些数据
+
+#访问限制
+#在Class内部，可以有属性和方法，而外部代码可以通过直接调用实例变量的方法来操作数据，这样，就隐藏了内部的复杂逻辑。
+
+#但是，从前面Student类的定义来看，外部代码还是可以自由地修改一个实例的name、score属性
+st.name = 'Joy'
+print(st.name,st.score)
+#如果要让内部属性不被外部访问，可以把属性的名称前加上两个下划线__，
+#在Python中，实例的变量名如果以__开头，就变成了一个私有变量（private），只有内部可以访问，外部不能访问。
+class Student(object):
+    """docstring for Student"""
+    def __init__(self, name, score):
+        super(Student, self).__init__()
+        self.__name = name
+        self.__score = score
+    def get_name(self):
+        return self.__name
+    def get_score(self):
+        return self.__score
+    def set_score(self, score):
+        self.__score = score
+#改完后，对于外部代码来说，没什么变动，但是已经无法从外部访问实例变量.__name和实例变量.__score了
+st = Student('Tom', 99) 
+#print(st.__name,st.__score) 
+#AttributeError: 'Student' object has no attribute '__name'  
+print(st.get_name(),'namessssss') 
+#这样就确保了外部代码不能随意修改对象内部的状态，这样通过访问限制的保护，代码更加健壮。
+
+#需要注意的是，在Python中，变量名类似__xxx__的，也就是以双下划线开头，并且以双下划线结尾的，是特殊变量，
+#特殊变量是可以直接访问的，不是private变量，所以，不能用__name__、__score__这样的变量名
+#双下划线开头的实例变量是不是一定不能从外部访问呢？其实也不是。
+#不能直接访问__name是因为Python解释器对外把__name变量改成了_Student__name，
+#所以，仍然可以通过_Student__name来访问__name变量：
+print('我就是这么任性的访问私有变量：',st._Student__name)
+
+#继承与多态
+#在OOP程序设计中，当我们定义一个class的时候，可以从某个现有的class继承，新的class称为子类（Subclass），
+#而被继承的class称为基类、父类或超类（Base class、Super class）。
+class Animal(object):
+    def run(self):
+        print('Animal is running...')
+class Dog(Animal):
+    def run(self):
+        print('Dog is running...')
+
+    def eat(self):
+        print('Eating meat...')
+
+class Cat(Animal):
+    def run(self):
+        print('Cat is running...')
+class Bird(Animal):
+    pass
+dog = Dog()
+cat = Cat()
+bird = Bird()
+dog.run()
+dog.eat()
+cat.run()
+bird.run()
+#要理解多态的好处，我们还需要再编写一个函数，这个函数接受一个Animal类型的变量：
+def run_twice(animal):
+    animal.run()
+    animal.run()
+run_twice(dog)
+#静态语音与动态语音
+#对于静态语言（例如Java）来说，如果需要传入Animal类型，则传入的对象必须是Animal类型或者它的子类，否则，将无法调用run()方法。
+#对于Python这样的动态语言来说，则不一定需要传入Animal类型。我们只需要保证传入的对象有一个run()方法就可以了：
+class Timer(object):
+    """docstring for Timer"""
+    def __init__(self):
+        super(Timer, self).__init__()
+    def run(self):
+        print('start.....')
+timer = Timer()
+run_twice(timer)
+#这就是动态语言的“鸭子类型”，它并不要求严格的继承体系，一个对象只要“看起来像鸭子，走起路来像鸭子”，那它就可以被看做是鸭子。
+
+#Python的“file-like object“就是一种鸭子类型。对真正的文件对象，它有一个read()方法，返回其内容。但是，许多对象，只要有read()方法，
+#都被视为“file-like object“。许多函数接收的参数就是“file-like object“，你不一定要传入真正的文件对象，
+#完全可以传入任何实现了read()方法的对象        
+
+
+#获取对象信息
+#当我们拿到一个对象的引用时，如何知道这个对象是什么类型、有哪些方法呢？
+#使用type()
+print(type(123),type('123'),type(True),type(mList),type(abs))
+#使用isinstance()
+#对于class的继承关系来说，使用type()就很不方便。我们要判断class的类型，可以使用isinstance()函数。
+print(isinstance(dog, Dog))
+print(isinstance(dog, Animal))
+print(isinstance(dog, str))
+#使用dir()
+#如果要获得一个对象的所有属性和方法，可以使用dir()函数，它返回一个包含字符串的list，比如，获得一个str对象的所有属性和方法：
+p(dir('ABC'))
+p('ABC'.__len__())
+
+#仅仅把属性和方法列出来是不够的，配合getattr()、setattr()以及hasattr()，我们可以直接操作一个对象的状态：
+hasattr(dog, 'x') # 有属性'x'吗？
+setattr(dog, 'y', 19) # 设置一个属性'y'
+p(getattr(dog, 'y')) # 获取属性'y'
+p(dog.y) # 获取属性'y'
+
+#实例属性和类属性
+#由于Python是动态语言，根据类创建的实例可以任意绑定属性。
+
+#给实例绑定属性的方法是通过实例变量，或者通过self变量：
+class Student(object):
+    def __init__(self, name):
+        self.name = name
+
+s = Student('Bob')
+s.score = 90
+#但是，如果Student类本身需要绑定一个属性呢？可以直接在class中定义属性，这种属性是类属性，归Student类所有：
+class Student(object):
+    name = 'Student'
+st = Student()
+p(st.name)
+st.name = 'Tom'
+p(st.name)
+del st.name
+p(st.name)
+#在编写程序的时候，千万不要把实例属性和类属性使用相同的名字，因为相同名称的实例属性将屏蔽掉类属性，
+#但是当你删除实例属性后，再使用相同的名称，访问到的将是类属性。
+
+
+#面向对象高级编程
+#数据封装、继承和多态只是面向对象程序设计中最基础的3个概念。在Python中，面向对象还有很多高级特性，允许我们写出非常强大的功能。
+#我们会讨论多重继承、定制类、元类等概念。
+
+
+#使用__slots__
+#正常情况下，当我们定义了一个class，创建了一个class的实例后，我们可以给该实例绑定任何属性和方法，这就是动态语言的灵活性。先定义class：
+class Student(object):
+    """docstring for Student"""
+    def __init__(self):
+        super(Student, self).__init__()
+s = Student()
+s.name = 'Tom' #给一个实例绑定属性
+p('name:',s.name)  
+from types import MethodType
+def set_name(self, name):
+    self.name = name
+s.set_name = MethodType(set_name, s)# 给实例绑定一个方法
+s.set_name('Joy')
+p(s.name)
+#但是，给一个实例绑定的方法，对另一个实例是不起作用的
+#为了给所有实例都绑定方法，可以给class绑定方法：
+Student.set_name = MethodType(set_name, Student)
+#给class绑定方法后，所有实例均可调用
+#使用__slots__
+#但是，如果我们想要限制实例的属性怎么办？比如，只允许对Student实例添加name和age属性。
+#为了达到限制的目的，Python允许在定义class的时候，定义一个特殊的__slots__变量，来限制该class实例能添加的属性：
+class Student(object):
+    __slots__ = ('name', 'age') # 用tuple定义允许绑定的属性名称
+
+s = Student()
+s.name = 'Tom'
+s.age = 24
+#s.score = 99
+#AttributeError: 'Student' object has no attribute 'score'
+#由于'score'没有被放到__slots__中，所以不能绑定score属性，试图绑定score将得到AttributeError的错误。
+
+#使用__slots__要注意，__slots__定义的属性仅对当前类实例起作用，对继承的子类是不起作用的：
+class GraduateStudent(Student):
+    """docstring for GraduateStudent"""
+    def __init__(self):
+        super(GraduateStudent, self).__init__()
+s = GraduateStudent()
+s.name = 'Tom'
+s.age = 24
+s.score = 99      
+p(s.score)
+
+#使用@property
+#在绑定属性时，如果我们直接把属性暴露出去，虽然写起来很简单，但是，没办法检查参数，导致可以把成绩随便改：
+#这显然不合逻辑。为了限制score的范围，可以通过一个set_score()方法来设置成绩，再通过一个get_score()来获取成绩，
+#这样，在set_score()方法里，就可以检查参数
+class Student(object):
+
+    def get_score(self):
+         return self._score
+
+    def set_score(self, value):
+        if not isinstance(value, int):
+            raise ValueError('score must be an integer!')
+        if value < 0 or value > 100:
+            raise ValueError('score must between 0 ~ 100!')
+        self._score = value
+s = Student()
+s.set_score(60) # ok!
+p(s.get_score())
+
+#还记得装饰器（decorator）可以给函数动态加上功能吗？对于类的方法，装饰器一样起作用。
+#Python内置的@property装饰器就是负责把一个方法变成属性调用的：
+class Student(object):
+
+    @property
+    def score(self):
+        return self._score
+
+    @score.setter
+    def score(self, value):
+        if not isinstance(value, int):
+            raise ValueError('score must be an integer!')
+        if value < 0 or value > 100:
+            raise ValueError('score must between 0 ~ 100!')
+        self._score = value
+#@property的实现比较复杂，我们先考察如何使用。把一个getter方法变成属性，只需要加上@property就可以了，
+#此时，@property本身又创建了另一个装饰器@score.setter，负责把一个setter方法变成属性赋值，于是，我们就拥有一个可控的属性操作
+s = Student()
+s.score = 70 # ok!
+p(s.score)
+
+#多重继承
+# Dog - 狗狗；
+# Bat - 蝙蝠；
+# Parrot - 鹦鹉；
+# Ostrich - 鸵鸟。
+class Runnable(object):
+    def run(self):
+        print('Running...')
+
+class Flyable(object):
+    def fly(self):
+        print('Flying...')
+class Parrot(Flyable, Runnable):
+    pass
+
+#MixIn
+# 在设计类的继承关系时，通常，主线都是单一继承下来的，例如，Ostrich继承自Bird。但是，如果需要“混入”额外的功能，通过多重继承就可以实现，
+# 比如，让Ostrich除了继承自Bird外，再同时继承Runnable。这种设计通常称之为MixIn
+
+
+#定制类
+# 看到类似__slots__这种形如__xxx__的变量或者函数名就要注意，这些在Python中是有特殊用途的。
+
+# __slots__我们已经知道怎么用了，__len__()方法我们也知道是为了能让class作用于len()函数。
+
+# 除此之外，Python的class中还有许多这样有特殊用途的函数，可以帮助我们定制类。
+
+#__str__
+class Student(object):
+    """docstring for Student"""
+    def __init__(self, name):
+        super(Student, self).__init__()
+        self.name = name
+    def __str__(self):
+        return 'Student object (name: %s)' %self.name
+    __repr__ = __str__
+s = Student('Tom')
+p(s)
+
+#__iter__
+# 如果一个类想被用于for ... in循环，类似list或tuple那样，就必须实现一个__iter__()方法，该方法返回一个迭代对象，
+# 然后，Python的for循环就会不断调用该迭代对象的__next__()方法拿到循环的下一个值，直到遇到StopIteration错误时退出循环。
+# __getitem__
+# Fib实例虽然能作用于for循环，看起来和list有点像，但是，把它当成list来使用还是不行，比如，取第5个元素：
+# __getattr__
+# 正常情况下，当我们调用类的方法或属性时，如果不存在，就会报错。
+#要避免这个错误，除了可以加上一个score属性外，Python还有另一个机制，那就是写一个__getattr__()方法，动态返回一个属性。
+class Fib(object):
+    def __init__(self):
+        self.a, self.b = 0, 1 # 初始化两个计数器a，b
+
+    def __iter__(self):
+        return self # 实例本身就是迭代对象，故返回自己
+
+    def __next__(self):
+        self.a, self.b = self.b, self.a + self.b # 计算下一个值
+        if self.a > 100000: # 退出循环的条件
+            raise StopIteration();
+        return self.a # 返回下一个值
+    def __getitem__(self, n):
+        a, b = 1, 1
+        for x in range(n):
+            a, b = b, a + b
+        return a
+    def __getattr__(self, attr):
+        if attr=='score':
+            return 99
+        if attr=='age':
+            return lambda: 25
+        raise AttributeError('\'Student\' object has no attribute \'%s\'' % attr) #要让class只响应特定的几个属性，抛出AttributeError的错误：
+
+#利用完全动态的__getattr__，我们可以写出一个链式调用：
+class Chain(object):
+
+    def __init__(self, path=''):
+        self._path = path
+
+    def __getattr__(self, path):
+        return Chain('%s/%s' % (self._path, path))
+
+    def __str__(self):
+        return self._path
+
+    __repr__ = __str__
+
+# __call__
+
+# 一个对象实例可以有自己的属性和方法，当我们调用实例方法时，我们用instance.method()来调用。能不能直接在实例本身上调用呢？在Python中，答案是肯定的。
+
+# 任何类，只需要定义一个__call__()方法，就可以直接对实例进行调用。请看示例：
+class Student(object):
+    def __init__(self, name):
+        self.name = name
+
+    def __call__(self):
+        print('My name is %s.' % self.name)
+
+s = Student('Michael')
+s()
+
+#使用枚举类
+#当我们需要定义常量时，一个办法是用大写变量通过整数来定义，例如月份：
+JAN = 1
+FEB = 2
+MAR = 3
+NOV = 11
+DEC = 12
+#更好的方法是为这样的枚举类型定义一个class类型，然后，每个常量都是class的一个唯一实例。Python提供了Enum类来实现这个功能：
+from enum import Enum
+
+Month = Enum('Month', ('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'))
+#这样我们就获得了Month类型的枚举类，可以直接使用Month.Jan来引用一个常量，或者枚举它的所有成员：
+for name, member in Month.__members__.items():
+    print(name, '=>', member, ',', member.value)
+
+# value属性则是自动赋给成员的int常量，默认从1开始计数。
+
+# 如果需要更精确地控制枚举类型，可以从Enum派生出自定义类：
+from enum import Enum, unique
+@unique
+class Weekday(Enum):
+    Sun = 0 # Sun的value被设定为0
+    Mon = 1
+    Tue = 2
+    Wed = 3
+    Thu = 4
+    Fri = 5
+    Sat = 6
+#@unique装饰器可以帮助我们检查保证没有重复值。
+print(Weekday.Tue)
+
+#使用元类
+#type()
+# 动态语言和静态语言最大的不同，就是函数和类的定义，不是编译时定义的，而是运行时动态创建的。
+
+# 比方说我们要定义一个Hello的class，就写一个hello.py模块：
+class Hello(object):
+    def hello(self, name='world'):
+        print('Hello, %s.' % name)
+#当Python解释器载入hello模块时，就会依次执行该模块的所有语句，执行结果就是动态创建出一个Hello的class对象
+# type()函数可以查看一个类型或变量的类型，Hello是一个class，它的类型就是type，而h是一个实例，它的类型就是class Hello。
+# 我们说class的定义是运行时动态创建的，而创建class的方法就是使用type()函数。
+# type()函数既可以返回一个对象的类型，又可以创建出新的类型，
+# 比如，我们可以通过type()函数创建出Hello类，而无需通过class Hello(object)...的定义
+def fn(self, name='world'): # 先定义函数
+    print('Hello, %s.' % name)
+
+Hello = type('Hello', (object,), dict(hello=fn)) # 创建Hello class
+
+h = Hello()
+print('call h.hello():')
+h.hello()
+print('type(Hello) =', type(Hello))
+print('type(h) =', type(h))
+
+# metaclass
+
+# 除了使用type()动态创建类以外，要控制类的创建行为，还可以使用metaclass。
+
+# metaclass，直译为元类，简单的解释就是：
+
+# 当我们定义了类以后，就可以根据这个类创建出实例，所以：先定义类，然后创建实例。
+
+# 但是如果我们想创建出类呢？那就必须根据metaclass创建出类，所以：先定义metaclass，然后创建类。
+
+# 连接起来就是：先定义metaclass，就可以创建类，最后创建实例。
+
+# 所以，metaclass允许你创建类或者修改类。换句话说，你可以把类看成是metaclass创建出来的“实例”。
+
+# metaclass是Python面向对象里最难理解，也是最难使用的魔术代码。正常情况下，你不会碰到需要使用metaclass的情况，所以，以下内容看不懂也没关系，因为基本上你不会用到。
+
+# 我们先看一个简单的例子，这个metaclass可以给我们自定义的MyList增加一个add方法：
+' Simple ORM using metaclass '
+
+class Field(object):
+
+    def __init__(self, name, column_type):
+        self.name = name
+        self.column_type = column_type
+
+    def __str__(self):
+        return '<%s:%s>' % (self.__class__.__name__, self.name)
+
+class StringField(Field):
+
+    def __init__(self, name):
+        super(StringField, self).__init__(name, 'varchar(100)')
+
+class IntegerField(Field):
+
+    def __init__(self, name):
+        super(IntegerField, self).__init__(name, 'bigint')
+
+class ModelMetaclass(type):
+
+    def __new__(cls, name, bases, attrs):
+        if name=='Model':
+            return type.__new__(cls, name, bases, attrs)
+        print('Found model: %s' % name)
+        mappings = dict()
+        for k, v in attrs.items():
+            if isinstance(v, Field):
+                print('Found mapping: %s ==> %s' % (k, v))
+                mappings[k] = v
+        for k in mappings.keys():
+            attrs.pop(k)
+        attrs['__mappings__'] = mappings # 保存属性和列的映射关系
+        attrs['__table__'] = name # 假设表名和类名一致
+        return type.__new__(cls, name, bases, attrs)
+
+class Model(dict, metaclass=ModelMetaclass):
+
+    def __init__(self, **kw):
+        super(Model, self).__init__(**kw)
+
+    def __getattr__(self, key):
+        try:
+            return self[key]
+        except KeyError:
+            raise AttributeError(r"'Model' object has no attribute '%s'" % key)
+
+    def __setattr__(self, key, value):
+        self[key] = value
+
+    def save(self):
+        fields = []
+        params = []
+        args = []
+        for k, v in self.__mappings__.items():
+            fields.append(v.name)
+            params.append('?')
+            args.append(getattr(self, k, None))
+        sql = 'insert into %s (%s) values (%s)' % (self.__table__, ','.join(fields), ','.join(params))
+        print('SQL: %s' % sql)
+        print('ARGS: %s' % str(args))
+
+# testing code:
+
+class User(Model):
+    id = IntegerField('id')
+    name = StringField('username')
+    email = StringField('email')
+    password = StringField('password')
+
+u = User(id=12345, name='Michael', email='test@orm.org', password='my-pwd')
+u.save()
+
+# 错误、调试和测试
+# 在程序运行过程中，总会遇到各种各样的错误。
+
+# 有的错误是程序编写有问题造成的，比如本来应该输出整数结果输出了字符串，这种错误我们通常称之为bug，bug是必须修复的。
+
+# 有的错误是用户输入造成的，比如让用户输入email地址，结果得到一个空字符串，这种错误可以通过检查用户输入来做相应的处理。
+
+# 还有一类错误是完全无法在程序运行过程中预测的，比如写入文件的时候，磁盘满了，写不进去了，或者从网络抓取数据，网络突然断掉了。这类错误也称为异常，在程序中通常是必须处理的，否则，程序会因为各种问题终止并退出。
+
+# Python内置了一套异常处理机制，来帮助我们进行错误处理。
+
+# 此外，我们也需要跟踪程序的执行，查看变量的值是否正确，这个过程称为调试。Python的pdb可以让我们以单步方式执行代码。
+
+# 最后，编写测试也很重要。有了良好的测试，就可以在程序修改后反复运行，确保程序输出符合我们编写的测试。
+
+#错误处理
+try:
+    print('try...')
+    r = 10 / int('2')
+    print('result:', r)
+except ValueError as e:
+    print('ValueError:', e)
+except ZeroDivisionError as e:
+    print('ZeroDivisionError:', e)
+else:
+    print('no error!')
+finally:
+    print('finally...')
+print('END')
+# 使用try...except捕获错误还有一个巨大的好处，就是可以跨越多层调用，
+# 比如函数main()调用foo()，foo()调用bar()，结果bar()出错了，这时，只要main()捕获到了，就可以处理：
+def foo(s):
+    return 10 / int(s)
+
+def bar(s):
+    return foo(s) * 2
+
+def main():
+    try:
+        bar('0')
+    except Exception as e:
+        print('Error:', e)
+    finally:
+        print('finally...')
+#调用堆栈
+# 如果错误没有被捕获，它就会一直往上抛，最后被Python解释器捕获，打印一个错误信息，然后程序退出。来看看err.py：
+# err.py:
+def foo(s):
+    return 10 / int(s)
+
+def bar(s):
+    return foo(s) * 2
+
+def main():
+    bar('0')
+
+# main() #为了代码可以运行进行注释
+# 执行，结果如下
+# Traceback (most recent call last):
+#   File "err.py", line 11, in <module>
+#     main()
+#   File "err.py", line 9, in main
+#     bar('0')
+#   File "err.py", line 6, in bar
+#     return foo(s) * 2
+#   File "err.py", line 3, in foo
+#     return 10 / int(s)
+# ZeroDivisionError: division by zero
+# 根据错误类型ZeroDivisionError，我们判断，int(s)本身并没有出错，但是int(s)返回0，在计算10 / 0时出错，至此，找到错误源头。
+
+# 记录错误
+
+# 如果不捕获错误，自然可以让Python解释器来打印出错误堆栈，但程序也被结束了。既然我们能捕获错误，就可以把错误堆栈打印出来，然后分析错误原因，同时，让程序继续执行下去。
+
+# Python内置的logging模块可以非常容易地记录错误信息：
+import logging
+
+def foo(s):
+    return 10 / int(s)
+
+def bar(s):
+    return foo(s) * 2
+
+def main():
+    try:
+        bar('0')
+    except Exception as e:
+        logging.exception(e)
+
+main()
+print('END')
+# 样是出错，但程序打印完错误信息后会继续执行，并正常退出：
+# ERROR:root:division by zero
+# Traceback (most recent call last):
+#   File "err_logging.py", line 13, in main
+#     bar('0')
+#   File "err_logging.py", line 9, in bar
+#     return foo(s) * 2
+#   File "err_logging.py", line 6, in foo
+#     return 10 / int(s)
+# ZeroDivisionError: division by zero
+# END
+
+# 抛出错误
+
+# 因为错误是class，捕获一个错误就是捕获到该class的一个实例。因此，错误并不是凭空产生的，而是有意创建并抛出的。Python的内置函数会抛出很多类型的错误，我们自己编写的函数也可以抛出错误。
+
+# 如果要抛出错误，首先根据需要，可以定义一个错误的class，选择好继承关系，然后，用raise语句抛出一个错误的实例：
+class FooError(ValueError):
+    pass
+
+def foo(s):
+    n = int(s)
+    if n==0:
+        raise FooError('invalid value: %s' % s)
+    return 10 / n
+
+#foo('0')#TODO
+# 执行，可以最后跟踪到我们自己定义的错误：
+
+# $ python3 err_raise.py 
+# Traceback (most recent call last):
+#   File "err_throw.py", line 11, in <module>
+#     foo('0')
+#   File "err_throw.py", line 8, in foo
+#     raise FooError('invalid value: %s' % s)
+# __main__.FooError: invalid value: 0
+# 只有在必要的时候才定义我们自己的错误类型。如果可以选择Python已有的内置的错误类型（比如ValueError，TypeError），尽量使用Python内置的错误类型。
+
+# 最后，我们来看另一种错误处理的方式：
+def foo(s):
+    n = int(s)
+    if n==0:
+        raise ValueError('invalid value: %s' % s)
+    return 10 / n
+
+def bar():
+    try:
+        foo('0')
+    except ValueError as e:
+        print('ValueError!')
+        raise
+
+#bar()#TODO
+# 在bar()函数中，我们明明已经捕获了错误，但是，打印一个ValueError!后，又把错误通过raise语句抛出去了，这不有病么？
+
+# 其实这种错误处理方式不但没病，而且相当常见。捕获错误目的只是记录一下，便于后续追踪。但是，由于当前函数不知道应该怎么处理该错误，
+# 所以，最恰当的方式是继续往上抛，让顶层调用者去处理。好比一个员工处理不了一个问题时，就把问题抛给他的老板，
+# 如果他的老板也处理不了，就一直往上抛，最终会抛给CEO去处理。
+#常见错误关系
+# BaseException
+#  +-- SystemExit
+#  +-- KeyboardInterrupt
+#  +-- GeneratorExit
+#  +-- Exception
+#       +-- StopIteration
+#       +-- StopAsyncIteration
+#       +-- ArithmeticError
+#       |    +-- FloatingPointError
+#       |    +-- OverflowError
+#       |    +-- ZeroDivisionError
+#       +-- AssertionError
+#       +-- AttributeError
+#       +-- BufferError
+#       +-- EOFError
+#       +-- ImportError
+#       +-- LookupError
+#       |    +-- IndexError
+#       |    +-- KeyError
+#       +-- MemoryError
+#       +-- NameError
+#       |    +-- UnboundLocalError
+#       +-- OSError
+#       |    +-- BlockingIOError
+#       |    +-- ChildProcessError
+#       |    +-- ConnectionError
+#       |    |    +-- BrokenPipeError
+#       |    |    +-- ConnectionAbortedError
+#       |    |    +-- ConnectionRefusedError
+#       |    |    +-- ConnectionResetError
+#       |    +-- FileExistsError
+#       |    +-- FileNotFoundError
+#       |    +-- InterruptedError
+#       |    +-- IsADirectoryError
+#       |    +-- NotADirectoryError
+#       |    +-- PermissionError
+#       |    +-- ProcessLookupError
+#       |    +-- TimeoutError
+#       +-- ReferenceError
+#       +-- RuntimeError
+#       |    +-- NotImplementedError
+#       |    +-- RecursionError
+#       +-- SyntaxError
+#       |    +-- IndentationError
+#       |         +-- TabError
+#       +-- SystemError
+#       +-- TypeError
+#       +-- ValueError
+#       |    +-- UnicodeError
+#       |         +-- UnicodeDecodeError
+#       |         +-- UnicodeEncodeError
+#       |         +-- UnicodeTranslateError
+#       +-- Warning
+#            +-- DeprecationWarning
+#            +-- PendingDeprecationWarning
+#            +-- RuntimeWarning
+#            +-- SyntaxWarning
+#            +-- UserWarning
+#            +-- FutureWarning
+#            +-- ImportWarning
+#            +-- UnicodeWarning
+#            +-- BytesWarning
+#            +-- ResourceWarning
+
+
+#调试
+#断言
+# 凡是用print()来辅助查看的地方，都可以用断言（assert）来替代：
+
+def foo(s):
+    n = int(s)
+    assert n != 0, 'n is zero!'
+    return 10 / n
+
+def main():
+    foo('0')
+# assert的意思是，表达式n != 0应该是True，否则，根据程序运行的逻辑，后面的代码肯定会出错。
+
+# 如果断言失败，assert语句本身就会抛出AssertionError
+
+# logging
+
+# 把print()替换为logging是第3种方式，和assert比，logging不会抛出错误，而且可以输出到文件：
+
+import logging
+logging.basicConfig(level=logging.INFO)
+
+s = '0'
+n = int(s)
+logging.info('n = %d' % n)
+#print(10 / n)
+# logging的另一个好处是通过简单的配置，一条语句可以同时输出到不同的地方，比如console和文件。
+
+#单元测试
+# 为了编写单元测试，我们需要引入Python自带的unittest模块，编写mydict_test.py如下：
+
+# import unittest
+
+# from mydict import Dict
+
+# class TestDict(unittest.TestCase):
+
+#     def test_init(self):
+#         d = Dict(a=1, b='test')
+#         self.assertEqual(d.a, 1)
+#         self.assertEqual(d.b, 'test')
+#         self.assertTrue(isinstance(d, dict))
+
+#     def test_key(self):
+#         d = Dict()
+#         d['key'] = 'value'
+#         self.assertEqual(d.key, 'value')
+
+#     def test_attr(self):
+#         d = Dict()
+#         d.key = 'value'
+#         self.assertTrue('key' in d)
+#         self.assertEqual(d['key'], 'value')
+
+#     def test_keyerror(self):
+#         d = Dict()
+#         with self.assertRaises(KeyError):
+#             value = d['empty']
+
+#     def test_attrerror(self):
+#         d = Dict()
+#         with self.assertRaises(AttributeError):
+#             value = d.empty
+# 编写单元测试时，我们需要编写一个测试类，从unittest.TestCase继承。
+
+# 以test开头的方法就是测试方法，不以test开头的方法不被认为是测试方法，测试的时候不会被执行。
+
+# 对每一类测试都需要编写一个test_xxx()方法。由于unittest.TestCase提供了很多内置的条件判断，我们只需要调用这些方法就可以断言输出是否是我们所期望的。最常用的断言就是assertEqual()：
+
+# self.assertEqual(abs(-1), 1) # 断言函数返回的结果与1相等
+# 另一种重要的断言就是期待抛出指定类型的Error，比如通过d['empty']访问不存在的key时，断言会抛出KeyError：
+
+# with self.assertRaises(KeyError):
+#     value = d['empty']
+# 而通过d.empty访问不存在的key时，我们期待抛出AttributeError：
+
+# with self.assertRaises(AttributeError):
+#     value = d.empty
+
+# setUp与tearDown
+
+# 可以在单元测试中编写两个特殊的setUp()和tearDown()方法。这两个方法会分别在每调用一个测试方法的前后分别被执行。
+
+#文档测试
+# TODO
+
+# IO编程
+# IO在计算机中指Input/Output，也就是输入和输出。由于程序和运行时数据是在内存中驻留，由CPU这个超快的计算核心来执行，涉及到数据交换的地方，通常是磁盘、网络等，就需要IO接口。
+
+# 比如你打开浏览器，访问新浪首页，浏览器这个程序就需要通过网络IO获取新浪的网页。浏览器首先会发送数据给新浪服务器，告诉它我想要首页的HTML，这个动作是往外发数据，叫Output，随后新浪服务器把网页发过来，这个动作是从外面接收数据，叫Input。所以，通常，程序完成IO操作会有Input和Output两个数据流。当然也有只用一个的情况，比如，从磁盘读取文件到内存，就只有Input操作，反过来，把数据写到磁盘文件里，就只是一个Output操作。
+
+# IO编程中，Stream（流）是一个很重要的概念，可以把流想象成一个水管，数据就是水管里的水，但是只能单向流动。Input Stream就是数据从外面（磁盘、网络）流进内存，Output Stream就是数据从内存流到外面去。对于浏览网页来说，浏览器和新浪服务器之间至少需要建立两根水管，才可以既能发数据，又能收数据。
+
+# 由于CPU和内存的速度远远高于外设的速度，所以，在IO编程中，就存在速度严重不匹配的问题。举个例子来说，比如要把100M的数据写入磁盘，CPU输出100M的数据只需要0.01秒，可是磁盘要接收这100M数据可能需要10秒，怎么办呢？有两种办法：
+
+# 第一种是CPU等着，也就是程序暂停执行后续代码，等100M的数据在10秒后写入磁盘，再接着往下执行，这种模式称为同步IO；
+
+# 另一种方法是CPU不等待，只是告诉磁盘，“您老慢慢写，不着急，我接着干别的事去了”，于是，后续代码可以立刻接着执行，这种模式称为异步IO。
+
+# 同步和异步的区别就在于是否等待IO执行的结果。好比你去麦当劳点餐，你说“来个汉堡”，服务员告诉你，对不起，汉堡要现做，需要等5分钟，于是你站在收银台前面等了5分钟，拿到汉堡再去逛商场，这是同步IO。
+
+# 你说“来个汉堡”，服务员告诉你，汉堡需要等5分钟，你可以先去逛商场，等做好了，我们再通知你，这样你可以立刻去干别的事情（逛商场），这是异步IO。
+
+# 很明显，使用异步IO来编写程序性能会远远高于同步IO，但是异步IO的缺点是编程模型复杂。想想看，你得知道什么时候通知你“汉堡做好了”，而通知你的方法也各不相同。如果是服务员跑过来找到你，这是回调模式，如果服务员发短信通知你，你就得不停地检查手机，这是轮询模式。总之，异步IO的复杂度远远高于同步IO。
+
+# 操作IO的能力都是由操作系统提供的，每一种编程语言都会把操作系统提供的低级C接口封装起来方便使用，Python也不例外。我们后面会详细讨论Python的IO编程接口。
+
+# 注意，本章的IO编程都是同步模式，异步IO由于复杂度太高，后续涉及到服务器端程序开发时我们再讨论。
+
+
+# 文件读写
+# 二进制文件
+
+# 前面讲的默认都是读取文本文件，并且是UTF-8编码的文本文件。要读取二进制文件，比如图片、视频等等，用'rb'模式打开文件即可：
+from datetime import datetime
+
+with open('test.txt', 'w') as f:
+    f.write('今天是 ')
+    f.write(datetime.now().strftime('%Y-%m-%d'))
+
+with open('test.txt', 'r') as f:
+    s = f.read()
+    print('open for read...')
+    print(s)
+
+with open('test.txt', 'rb') as f:
+    s = f.read()
+    print('open as binary for read...')
+    print(s)
+
+# StringIO和BytesIO
+# StringIO
+
+# 很多时候，数据读写不一定是文件，也可以在内存中读写。
+
+# StringIO顾名思义就是在内存中读写str。
+
+# 要把str写入StringIO，我们需要先创建一个StringIO，然后，像文件一样写入即可：
+from io import StringIO
+
+# write to StringIO:
+f = StringIO()
+f.write('hello')
+f.write(' ')
+f.write('world!')
+print(f.getvalue())
+
+# read from StringIO:
+f = StringIO('水面细风生，\n菱歌慢慢声。\n客亭临小市，\n灯火夜妆明。')
+while True:
+    s = f.readline()
+    if s == '':
+        break
+    print(s.strip())
+# BytesIO
+
+# StringIO操作的只能是str，如果要操作二进制数据，就需要使用BytesIO。
+
+# BytesIO实现了在内存中读写bytes，我们创建一个BytesIO，然后写入一些bytes：
+from io import BytesIO
+
+# write to BytesIO:
+f = BytesIO()
+f.write(b'hello')
+f.write(b' ')
+f.write(b'world!')
+print(f.getvalue())
+
+# read from BytesIO:
+data = '人闲桂花落，夜静春山空。月出惊山鸟，时鸣春涧中。'.encode('utf-8')
+f = BytesIO(data)
+print(f.read())
+
+# 操作文件和目录
+# 如果我们要操作文件、目录，可以在命令行下面输入操作系统提供的各种命令来完成。比如dir、cp等命令。
+
+# 如果要在Python程序中执行这些目录和文件的操作怎么办？其实操作系统提供的命令只是简单地调用了操作系统提供的接口函数，Python内置的os模块也可以直接调用操作系统提供的接口函数。
+
+# 打开Python交互式命令行，我们来看看如何使用os模块的基本功能：
+
+
+from datetime import datetime
+import os
+
+pwd = os.path.abspath('.')
+
+print('      Size     Last Modified  Name')
+print('------------------------------------------------------------')
+
+for f in os.listdir(pwd):
+    fsize = os.path.getsize(f)
+    mtime = datetime.fromtimestamp(os.path.getmtime(f)).strftime('%Y-%m-%d %H:%M')
+    flag = '/' if os.path.isdir(f) else ''
+    print('%10d  %s  %s%s' % (fsize, mtime, f, flag))
+
+# 序列化
+# 在程序运行的过程中，所有的变量都是在内存中，比如，定义一个dict：
+
+d = dict(name='Bob', age=20, score=88)
+# 可以随时修改变量，比如把name改成'Bill'，但是一旦程序结束，变量所占用的内存就被操作系统全部回收。如果没有把修改后的'Bill'存储到磁盘上，下次重新运行程序，变量又被初始化为'Bob'。
+
+# 我们把变量从内存中变成可存储或传输的过程称之为序列化，在Python中叫pickling，在其他语言中也被称之为serialization，marshalling，flattening等等，都是一个意思。
+
+# 序列化之后，就可以把序列化后的内容写入磁盘，或者通过网络传输到别的机器上。
+
+# 反过来，把变量内容从序列化的对象重新读到内存里称之为反序列化，即unpickling。
+
+# Python提供了pickle模块来实现序列化。
+import pickle
+d = dict(name='Tom', soure=99, age = 24)
+s = pickle.dumps(d)
+p(s)
+f = open('dumps.txt', 'wb')
+pickle.dump(d, f)
+f.close()
+f = open('dumps.txt', 'rb')
+d = pickle.load(f)
+f.close()
+p(d)
+
+
+# JSON
+
+# 如果我们要在不同的编程语言之间传递对象，就必须把对象序列化为标准格式，比如XML，但更好的方法是序列化为JSON，因为JSON表示出来就是一个字符串，可以被所有语言读取，也可以方便地存储到磁盘或者通过网络传输。JSON不仅是标准格式，并且比XML更快，而且可以直接在Web页面中读取，非常方便。
+
+# JSON表示的对象就是标准的JavaScript语言的对象，JSON和Python内置的数据类型对应如下：
+
+# JSON类型       Python类型
+# {}              dict
+# []              list
+# "string"        str
+# 1234.56         int或float
+# true/false      True/False
+# null            None
+
+import json
+
+d = dict(name='Bob', age=20, score=88)
+data = json.dumps(d)
+print('JSON Data is a str:', data)
+reborn = json.loads(data)
+print(reborn)
+
+class Student(object):
+
+    def __init__(self, name, age, score):
+        self.name = name
+        self.age = age
+        self.score = score
+
+    def __str__(self):
+        return 'Student object (%s, %s, %s)' % (self.name, self.age, self.score)
+
+s = Student('Bob', 20, 88)
+std_data = json.dumps(s, default=lambda obj: obj.__dict__)
+print('Dump Student:', std_data)
+rebuild = json.loads(std_data, object_hook=lambda d: Student(d['name'], d['age'], d['score']))
+print(rebuild)
+
+# 进程和线程
+# 很多同学都听说过，现代操作系统比如Mac OS X，UNIX，Linux，Windows等，都是支持“多任务”的操作系统。
+
+# 什么叫“多任务”呢？简单地说，就是操作系统可以同时运行多个任务。打个比方，你一边在用浏览器上网，一边在听MP3，一边在用Word赶作业，这就是多任务，至少同时有3个任务正在运行。还有很多任务悄悄地在后台同时运行着，只是桌面上没有显示而已。
+
+# 现在，多核CPU已经非常普及了，但是，即使过去的单核CPU，也可以执行多任务。由于CPU执行代码都是顺序执行的，那么，单核CPU是怎么执行多任务的呢？
+
+# 答案就是操作系统轮流让各个任务交替执行，任务1执行0.01秒，切换到任务2，任务2执行0.01秒，再切换到任务3，执行0.01秒……这样反复执行下去。表面上看，每个任务都是交替执行的，但是，由于CPU的执行速度实在是太快了，我们感觉就像所有任务都在同时执行一样。
+
+# 真正的并行执行多任务只能在多核CPU上实现，但是，由于任务数量远远多于CPU的核心数量，所以，操作系统也会自动把很多任务轮流调度到每个核心上执行。
+
+# 对于操作系统来说，一个任务就是一个进程（Process），比如打开一个浏览器就是启动一个浏览器进程，打开一个记事本就启动了一个记事本进程，打开两个记事本就启动了两个记事本进程，打开一个Word就启动了一个Word进程。
+
+# 有些进程还不止同时干一件事，比如Word，它可以同时进行打字、拼写检查、打印等事情。在一个进程内部，要同时干多件事，就需要同时运行多个“子任务”，我们把进程内的这些“子任务”称为线程（Thread）。
+
+# 由于每个进程至少要干一件事，所以，一个进程至少有一个线程。当然，像Word这种复杂的进程可以有多个线程，多个线程可以同时执行，多线程的执行方式和多进程是一样的，也是由操作系统在多个线程之间快速切换，让每个线程都短暂地交替运行，看起来就像同时执行一样。当然，真正地同时执行多线程需要多核CPU才可能实现。
+
+# 我们前面编写的所有的Python程序，都是执行单任务的进程，也就是只有一个线程。如果我们要同时执行多个任务怎么办？
+
+# 有两种解决方案：
+
+# 一种是启动多个进程，每个进程虽然只有一个线程，但多个进程可以一块执行多个任务。
+
+# 还有一种方法是启动一个进程，在一个进程内启动多个线程，这样，多个线程也可以一块执行多个任务。
+
+# 当然还有第三种方法，就是启动多个进程，每个进程再启动多个线程，这样同时执行的任务就更多了，当然这种模型更复杂，实际很少采用。
+
+# 总结一下就是，多任务的实现有3种方式：
+
+# 多进程模式；
+# 多线程模式；
+# 多进程+多线程模式。
+# 同时执行多个任务通常各个任务之间并不是没有关联的，而是需要相互通信和协调，有时，任务1必须暂停等待任务2完成后才能继续执行，有时，任务3和任务4又不能同时执行，所以，多进程和多线程的程序的复杂度要远远高于我们前面写的单进程单线程的程序。
+
+# 因为复杂度高，调试困难，所以，不是迫不得已，我们也不想编写多任务。但是，有很多时候，没有多任务还真不行。想想在电脑上看电影，就必须由一个线程播放视频，另一个线程播放音频，否则，单线程实现的话就只能先把视频播放完再播放音频，或者先把音频播放完再播放视频，这显然是不行的。
+
+# Python既支持多进程，又支持多线程，我们会讨论如何编写这两种多任务程序。
+# import os
+
+# print('Process (%s) start...' % os.getpid())
+# # Only works on Unix/Linux/Mac:
+# pid = os.fork()
+# if pid == 0:
+#     print('I am child process (%s) and my parent is %s.' % (os.getpid(), os.getppid()))
+# else:
+#     print('I (%s) just created a child process (%s).' % (os.getpid(), pid))
+# 运行结果如下：
+
+# Process (876) start...
+# I (876) just created a child process (877).
+# I am child process (877) and my parent is 876.
+# 由于Windows没有fork调用，上面的代码在Windows上无法运行。由于Mac系统是基于BSD（Unix的一种）内核，所以，在Mac下运行是没有问题的，推荐大家用Mac学Python！
+
+# multiprocessing
+# 于Python是跨平台的，自然也应该提供一个跨平台的多进程支持。multiprocessing模块就是跨平台版本的多进程模块。
+
+# multiprocessing模块提供了一个Process类来代表一个进程对象，下面的例子演示了启动一个子进程并等待其结束
+from multiprocessing import Process
+import os
+# 子进程要执行的代码
+def run_proc(name):
+    print('Run Child process name %s(%s)...' %(name, os.getpid()))
+if __name__ == '__main__':
+    print('Parent Process %s' %os.getpid())
+    p = Process(target=run_proc, args = ('test',))
+    print('Child Process Will start...')
+    p.start()
+    p.join()
+    print('Child Process END...')
+
+# 创建子进程时，只需要传入一个执行函数和函数的参数，创建一个Process实例，用start()方法启动，这样创建进程比fork()还要简单。
+
+# join()方法可以等待子进程结束后再继续往下运行，通常用于进程间的同步。
+
+# Pool
+
+# 如果要启动大量的子进程，可以用进程池的方式批量创建子进程：
+
+from multiprocessing import Pool
+import os, time, random
+def long_time_task(name):
+    print("RUn task %s(%s)" %(name, os.getpid()))
+    start = time.time()
+    time.sleep(random.random() * 3)
+    end = time.time()
+    print('Task Run %.3f seconds.' %(name, (end - start)))
+if __name__=='__main__':
+    print('Parent process %s.' %os.getpid())
+    pool = Pool(4)
+    for x in range(5):
+        pool.apply_async(long_time_task, args=(x,))
+    print('Waiting for all subprocess done.')
+    pool.close()
+    pool.join()
+    print('All subprocess done.')
+# # 对Pool对象调用join()方法会等待所有子进程执行完毕，调用join()之前必须先调用close()，调用close()之后就不能继续添加新的Process了。
+
+# # 请注意输出的结果，task 0，1，2，3是立刻执行的，而task 4要等待前面某个task完成后才执行，这是因为Pool的默认大小在我的电脑上是4，
+# # 因此，最多同时执行4个进程。这是Pool有意设计的限制，并不是操作系统的限制。
+
+
+# # 子进程
+
+# # 很多时候，子进程并不是自身，而是一个外部进程。我们创建了子进程后，还需要控制子进程的输入和输出。
+
+# # subprocess模块可以让我们非常方便地启动一个子进程，然后控制其输入和输出。
+# import subprocess
+
+# print('$ nslookup www.python.org')
+# r = subprocess.call(['nslookup', 'www.python.org'])
+# print('Exit code:', r)
+
+# print('$ nslookup')
+# p = subprocess.Popen(['nslookup'], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+# # output, err = p.communicate(b'set q=mx\npython.org\nexit\n')
+# # print(output.decode('utf-8'))
+# print('Exit code:', p.returncode)
+
+import subprocess
+print('start...')
+r = subprocess.call(['nslookup','www.python.org'])
+print('Exit code:',r)
+p = subprocess.Popen(['nslookup'], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+# output, err = p.comunicate(b'set q=mx\npython.org\nexit\n')
+# print(output.decode('utf-8'))
+print('Exit Code::',p.returncode)
+# # 进程间通信
+
+# # Process之间肯定是需要通信的，操作系统提供了很多机制来实现进程间的通信。Python的multiprocessing模块包装了底层的机制，
+# # 提供了Queue、Pipes等多种方式来交换数据。
+# from multiprocessing import Process, Queue
+# import os, time, random
+
+# # 写数据进程执行的代码:
+# def write(q):
+#     print('Process to write: %s' % os.getpid())
+#     for value in ['A', 'B', 'C']:
+#         print('Put %s to queue...' % value)
+#         q.put(value)
+#         time.sleep(random.random())
+
+# # 读数据进程执行的代码:
+# def read(q):
+#     print('Process to read: %s' % os.getpid())
+#     while True:
+#         value = q.get(True)
+#         print('Get %s from queue.' % value)
+
+# if __name__=='__main__':
+#     # 父进程创建Queue，并传给各个子进程：
+#     q = Queue()
+#     pw = Process(target=write, args=(q,))
+#     pr = Process(target=read, args=(q,))
+#     # 启动子进程pw，写入:
+#     pw.start()
+#     # 启动子进程pr，读取:
+#     pr.start()
+#     # 等待pw结束:
+#     pw.join()
+#     # pr进程里是死循环，无法等待其结束，只能强行终止:
+#     pr.terminate()
+
+# # 多线程
+# # 多任务可以由多进程完成，也可以由一个进程内的多线程完成。
+
+# # 我们前面提到了进程是由若干线程组成的，一个进程至少有一个线程。
+
+# # 由于线程是操作系统直接支持的执行单元，因此，高级语言通常都内置多线程的支持，Python也不例外，并且，Python的线程是真正的Posix Thread，而不是模拟出来的线程。
+
+# # Python的标准库提供了两个模块：_thread和threading，_thread是低级模块，threading是高级模块，对_thread进行了封装。绝大多数情况下，我们只需要使用threading这个高级模块。
+
+# # 启动一个线程就是把一个函数传入并创建Thread实例，然后调用start()开始执行：
+# import time, threading
+
+# # 新线程执行的代码:
+# def loop():
+#     print('thread %s is running...' % threading.current_thread().name)
+#     n = 0
+#     while n < 5:
+#         n = n + 5 #TODO n = n + 1
+#         print('thread %s >>> %s' % (threading.current_thread().name, n))
+#         time.sleep(1)
+#     print('thread %s ended.' % threading.current_thread().name)
+
+# print('thread %s is running...' % threading.current_thread().name)
+# t = threading.Thread(target=loop, name='LoopThread')
+# t.start()
+# t.join()
+# print('thread %s ended.' % threading.current_thread().name)
+
+# # Lock
+
+# # 多线程和多进程最大的不同在于，多进程中，同一个变量，各自有一份拷贝存在于每个进程中，互不影响，而多线程中，
+# # 所有变量都由所有线程共享，所以，任何一个变量都可以被任何一个线程修改，因此，
+# # 线程之间共享数据最大的危险在于多个线程同时改一个变量，把内容给改乱了。
+# import time, threading
+
+# # 假定这是你的银行存款:
+# balance = 0
+# lock = threading.Lock()
+
+# def change_it(n):
+#     # 先存后取，结果应该为0:
+#     global balance
+#     balance = balance + n
+#     balance = balance - n
+
+# def run_thread(n):
+#     for i in range(100000):
+#         # 先要获取锁:
+#         lock.acquire()
+#         try:
+#             # 放心地改吧:
+#             change_it(n)
+#         finally:
+#             # 改完了一定要释放锁:
+#             lock.release()
+
+# t1 = threading.Thread(target=run_thread, args=(5,))
+# t2 = threading.Thread(target=run_thread, args=(8,))
+# t1.start()
+# t2.start()
+# t1.join()
+# t2.join()
+# print(balance)
+
+
+# # ThreadLocal
+# # 全局变量local_school就是一个ThreadLocal对象，每个Thread对它都可以读写student属性，但互不影响。你可以把local_school看成全局变量，
+# # 但每个属性如local_school.student都是线程的局部变量，可以任意读写而互不干扰，也不用管理锁的问题，ThreadLocal内部会处理。
+# # ThreadLocal最常用的地方就是为每个线程绑定一个数据库连接，HTTP请求，用户身份信息等，
+# # 这样一个线程的所有调用到的处理函数都可以非常方便地访问这些资源。
+# # 一个ThreadLocal变量虽然是全局变量，但每个线程都只能读写自己线程的独立副本，互不干扰。
+# # ThreadLocal解决了参数在一个线程中各个函数之间互相传递的问题。
+
+# import threading
+
+# # 创建全局ThreadLocal对象:
+# local_school = threading.local()
+
+# def process_student():
+#     # 获取当前线程关联的student:
+#     std = local_school.student
+#     print('Hello, %s (in %s)' % (std, threading.current_thread().name))
+
+# def process_thread(name):
+#     # 绑定ThreadLocal的student:
+#     local_school.student = name
+#     process_student()
+
+# t1 = threading.Thread(target= process_thread, args=('Alice',), name='Thread-A')
+# t2 = threading.Thread(target= process_thread, args=('Bob',), name='Thread-B')
+# t1.start()
+# t2.start()
+# t1.join()
+# t2.join()
+
+# # 分布式进程
+# # 在Thread和Process中，应当优选Process，因为Process更稳定，而且，Process可以分布到多台机器上，而Thread最多只能分布到同一台机器的多个CPU上。
+
+# # Python的multiprocessing模块不但支持多进程，其中managers子模块还支持把多进程分布到多台机器上。一个服务进程可以作为调度者，将任务分布到其他多个进程中，依靠网络通信。由于managers模块封装很好，不必了解网络通信的细节，就可以很容易地编写分布式多进程程序。
+
+# # 举个例子：如果我们已经有一个通过Queue通信的多进程程序在同一台机器上运行，现在，由于处理任务的进程任务繁重，希望把发送任务的进程和处理任务的进程分布到两台机器上。怎么用分布式进程实现？
+
+# # 原有的Queue可以继续使用，但是，通过managers模块把Queue通过网络暴露出去，就可以让其他机器的进程访问Queue了。
+
+# # 我们先看服务进程，服务进程负责启动Queue，把Queue注册到网络上，然后往Queue里面写入任务：
+
+# import random, time, queue
+# from multiprocessing.managers import BaseManager
+
+# # 发送任务的队列:
+# task_queue = queue.Queue()
+# # 接收结果的队列:
+# result_queue = queue.Queue()
+
+# # 从BaseManager继承的QueueManager:
+# class QueueManager(BaseManager):
+#     pass
+
+# # 把两个Queue都注册到网络上, callable参数关联了Queue对象:
+# QueueManager.register('get_task_queue', callable=lambda: task_queue)
+# QueueManager.register('get_result_queue', callable=lambda: result_queue)
+# # 绑定端口5000, 设置验证码'abc':
+# manager = QueueManager(address=('', 5000), authkey=b'abc')
+# # 启动Queue:
+# manager.start()
+# # 获得通过网络访问的Queue对象:
+# task = manager.get_task_queue()
+# result = manager.get_result_queue()
+# # 放几个任务进去:
+# for i in range(10):
+#     n = random.randint(0, 10000)
+#     print('Put task %d...' % n)
+#     task.put(n)
+# # 从result队列读取结果:
+# print('Try get results...')
+# for i in range(10):
+#     r = result.get(timeout=10)
+#     print('Result: %s' % r)
+# # 关闭:
+# manager.shutdown()
+# print('master exit.')
+# # 请注意，当我们在一台机器上写多进程程序时，创建的Queue可以直接拿来用，但是，在分布式多进程环境下，
+# #添加任务到Queue不可以直接对原始的task_queue进行操作，那样就绕过了QueueManager的封装，
+# #必须通过manager.get_task_queue()获得的Queue接口添加。
+
+# # 然后，在另一台机器上启动任务进程（本机上启动也可以）：
+# import time, sys, queue
+# from multiprocessing.managers import BaseManager
+
+# # 创建类似的QueueManager:
+# class QueueManager(BaseManager):
+#     pass
+
+# # 由于这个QueueManager只从网络上获取Queue，所以注册时只提供名字:
+# QueueManager.register('get_task_queue')
+# QueueManager.register('get_result_queue')
+
+# # 连接到服务器，也就是运行task_master.py的机器:
+# server_addr = '127.0.0.1'
+# print('Connect to server %s...' % server_addr)
+# # 端口和验证码注意保持与task_master.py设置的完全一致:
+# m = QueueManager(address=(server_addr, 5000), authkey=b'abc')
+# # 从网络连接:
+# m.connect()
+# # 获取Queue的对象:
+# task = m.get_task_queue()
+# result = m.get_result_queue()
+# # 从task队列取任务,并把结果写入result队列:
+# for i in range(10):
+#     try:
+#         n = task.get(timeout=1)
+#         print('run task %d * %d...' % (n, n))
+#         r = '%d * %d = %d' % (n, n, n*n)
+#         time.sleep(1)
+#         result.put(r)
+#     except Queue.Empty:
+#         print('task queue is empty.')
+# # 处理结束:
+# print('worker exit.')
+
+
+# 正则表达式
+# 字符串是编程时涉及到的最多的一种数据结构，对字符串进行操作的需求几乎无处不在。比如判断一个字符串是否是合法的Email地址，
+# 虽然可以编程提取@前后的子串，再分别判断是否是单词和域名，但这样做不但麻烦，而且代码难以复用
+import re
+r = re.match(r'^\d{3}\-\d{3,8}$','123-1234')
+if r:
+    print('success...')
+else:
+    print('error...')
+
+# 切分字符串
+s = 'a  b  c'
+print(s.split(' '),re.split(r'\s+', s))
+# 分组
+# 除了简单地判断是否匹配之外，正则表达式还有提取子串的强大功能。用()表示的就是要提取的分组（Group）。比如：
+
+# ^(\d{3})-(\d{3,8})$分别定义了两个组，可以直接从匹配的字符串中提取出区号和本地号码
+r = re.match(r'^(\d{3})\-(\d{3,8})$','159-233333')
+print(r.group(0),r.group(1),r.group(2))
+#注意到group(0)永远是原始字符串，group(1)、group(2)……表示第1、2、……个子串。
+
+# 贪婪匹配
+# 后需要特别指出的是，正则匹配默认是贪婪匹配，也就是匹配尽可能多的字符。举例如下，匹配出数字后面的0
+print(re.match(r'^(\d+)(0*)$', '102300').groups())
+# 必须让\d+采用非贪婪匹配（也就是尽可能少匹配），才能把后面的0匹配出来，加个?就可以让\d+采用非贪婪匹配：
+print(re.match(r'^(\d+?)(0*)$', '10200200').groups())
 
 
 
