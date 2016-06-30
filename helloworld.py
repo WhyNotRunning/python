@@ -370,6 +370,7 @@ with request.urlopen(req, data=login_data.encode('utf-8')) as f:
         print('%s: %s' % (k, v))
     print('Data:', f.read().decode('utf-8'))
 '''
+
 # Handler
 
 # 如果还需要更复杂的控制，比如通过一个Proxy去访问网站，我们需要利用ProxyHandler来处理，示例代码如下：
@@ -379,8 +380,22 @@ with request.urlopen(req, data=login_data.encode('utf-8')) as f:
 # opener = request.build_opener(proxy_handler, proxy_auth_handler)
 # with opener.open('http://www.example.com/login.html') as f:
 #     pass
-
-
+r'''
+from bs4 import BeautifulSoup
+import urllib.request 
+import urllib.parse
+import re
+import http.cookiejar
+print('第三种方法')
+url = 'http://www.baidu.com'
+cj = http.cookiejar.CookieJar()
+opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(cj))
+urllib.request.install_opener(opener)
+respones = urllib.request.urlopen(url)
+print(respones.getcode())
+print(cj)
+print(respones.read())
+'''
 
 # PIL
 # PIL：Python Imaging Library，已经是Python平台事实上的图像处理标准库了。PIL功能非常强大，但API却非常简单易用。
@@ -503,6 +518,7 @@ image.save('code.jpg', 'jpeg')
 # Qt
 # GTK
 # Tkinter
+r'''
 from tkinter import *
 import tkinter.messagebox as messagebox
 
@@ -527,21 +543,67 @@ app = Application()
 app.master.title('Hello World')
 # 主消息循环:
 app.mainloop()
+'''
 
+# TCP编程
+# 客户端
 
+# 大多数连接都是可靠的TCP连接。创建TCP连接时，主动发起连接的叫客户端，被动响应连接的叫服务器。
+import socket,threading,time
 
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.connect(('www.sina.com.cn', 80))
+# AF_INET指定使用IPv4协议，如果要用更先进的IPv6，就指定为AF_INET6。
+# SOCK_STREAM指定使用面向流的TCP协议
+s.send(b'GET / HTTP/1.1\r\nHost: www.sina.com.cn\r\nConnection: close\r\n\r\n')
+buffer = []
+while True:
+	d = s.recv(1024)
+	if d:
+		buffer.append(d)
+	else:
+		break
+data = b''.join(buffer)
+s.close()
+header, html = data.split(b'\r\n\r\n', 1)
+print(header.decode('utf-8'))
+with open('sina.html', 'wb') as f:
+	f.write(html)
 
+# 服务器
 
+# 和客户端编程相比，服务器编程就要复杂一些。
 
+# 服务器进程
+def tcplink(sock, addr):
+	print('accept one new link from %s:%s' % addr)
+	sock.send(b'Welcome!')
+	while True:
+		data = sock.recv(1024)
+		time.sleep(1)
+		if not data or data.decode('utf-8') == 'exit':
+			break
+		sock.send(('Hello, %s!' % data.decode('utf-8')).encode('utf-8'))
+	sock.close()
+	print('connect from %s:%s closed.' % addr)
+r'''
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.bind(('127.0.0.1', 9999)) #绑定端口号
+s.listen(5)  #调用listen()方法，指定连接的最大数量
+print('waiting for connect ...')
+while True:
+	sock, addr = s.accept()
+	t = threading.Thread(target=tcplink, args=(sock, addr))
+	t.start()
+'''
+# UDP编程
+# TCP是建立可靠连接，并且通信双方都可以以流的形式发送数据。相对TCP，UDP则是面向无连接的协议。
 
+# 使用UDP协议时，不需要建立连接，只需要知道对方的IP地址和端口号，就可以直接发数据包。但是，能不能到达就不知道了。
 
-
-
-
-
-
-
-
-
-
-
+# 虽然用UDP传输数据不可靠，但它的优点是和TCP比，速度快，对于不要求可靠到达的数据，就可以使用UDP协议。
+s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+for x in [b'Joy', b'Tom', b'Mal']:
+	s.sendto(x,('127.0.0.1', 9999))
+	print(s.recv(1024).decode('utf-8'))
+s.close()
