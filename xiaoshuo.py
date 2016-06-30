@@ -71,3 +71,4 @@ if __name__ == '__main__':
         obj_spider.setUrl(root_url)
         obj_spider.craw(root_url)
         root_url = obj_spider.gerUrl()
+        print('success')
