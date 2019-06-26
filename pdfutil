@@ -1,0 +1,44 @@
+# encoding:utf-8
+from PyPDF2 import PdfFileReader, PdfFileWriter
+
+def splitPdf():
+    readFile = 'E:/workspace/Pdf-Split-Merge/outpud.pdf'
+    outFile = 'E:/workspace/Pdf-Split-Merge/spllit.pdf'
+    pdfFileWriter = PdfFileWriter()
+    start = 55;
+    end = 58;
+    start = 58;
+    end = 61;
+    start = 61;
+    end = 63;
+    start = 55;
+    end = 63;
+    # 获取 PdfFileReader 对象
+    pdfFileReader = PdfFileReader(readFile)  # 或者这个方式：pdfFileReader = PdfFileReader(open(readFile, 'rb'))
+
+    if pdfFileReader.isEncrypted: # 文件是否加密
+        try:
+            pdfFileReader.decrypt('')
+            print ('File Decrypted (PyPDF2)')
+        except:
+            command="cp "+readFile+" temp.pdf; qpdf --password='' --decrypt temp.pdf "+readFile
+            os.system(command)
+            print ('File Decrypted (qpdf)')
+            #re-open the decrypted file
+            fp = open(filename)
+            pdfFileReader = PdfFileReader(fp)
+        else:
+            print ('File Not Encrypted')
+    # 文档总页数
+    numPages = pdfFileReader.getNumPages()
+    if numPages <= end:
+        end = numPages;
+    if numPages >= start:
+        # 从第五页之后的页面，输出到一个新的文件中，即分割文档
+        for index in range(start, end):
+            pageObj = pdfFileReader.getPage(index)
+            pdfFileWriter.addPage(pageObj)
+        # 添加完每页，再一起保存至文件中
+        pdfFileWriter.write(open(outFile, 'wb'))
+
+splitPdf();
